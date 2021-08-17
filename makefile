@@ -6,7 +6,7 @@ OBJ		= obj
 
 # compiler setup
 CC		= gcc
-CFLAGS	= -Wall -Wextra -O3 -DNDEBUG -I $(INCLUDE)
+CFLAGS	= -Wall -Wextra -O3 -DNDEBUG
 LDFLAGS	= -lX11 -lm
 
 # files
@@ -20,7 +20,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
 
 $(OBJ)/%.o: $(SRC)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDE)
 
 clean:
 	rm -f $(OBJ)/* $(BIN)/*

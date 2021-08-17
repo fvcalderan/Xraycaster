@@ -1,4 +1,4 @@
-/* This is the primitives header file for Xraycaster
+/* This is the map header file for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,20 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _PRIMITIVES_H
-#define _PRIMITIVES_H
+#ifndef _MAP_H
+#define _MAP_H
 
-typedef struct {
-    int32_t x;
-    int32_t y;
-    int32_t width;
-    int32_t height;
-} Rect2;
+/* standard headers */
+#include <stdint.h>
 
-typedef struct {
-    float x;
-    float y;
-    float r;
-} Entity;
+/* Xraycaster headers */
+#include <datatypes.h>
 
 #endif

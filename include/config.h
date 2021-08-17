@@ -1,4 +1,4 @@
-/* This is the configuration header file for Xraycaster
+/* This is the config header file for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,20 +17,29 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
+/* Screen */
 #define SCR_WIDTH  480
 #define SCR_HEIGHT 480
 
+/* Colors */
 #define SKY_COLOR   0xadd9e5
 #define FLOOR_COLOR 0x333333
 #define WALL1_COLOR 0xffaaaa
 #define WALL2_COLOR 0xaaffaa
 #define WALL3_COLOR 0xaaaaff
 
-#define PLAYER_START_POS_X 1
-#define PLAYER_START_POS_Y 1
-#define PLAYER_START_ROT   0
+/* Player */
+#define PLR_POS_X   1
+#define PLR_POS_Y   1
+#define PLR_ROT     0
+#define PLR_SPEED   10
+#define PLR_RSPEED  0.104719
+#define PLR_FOV     1.047197
 
-const uint8_t map[10][10] = {
+/* Map */
+#define MAP_X 10
+#define MAP_Y 10
+const uint8_t MAP[MAP_X][MAP_Y] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},

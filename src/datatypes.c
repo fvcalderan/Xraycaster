@@ -1,4 +1,4 @@
-/* This is the main header file for Xraycaster
+/* This is the datatypes source code for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,19 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _MAIN_H
-#define _MAIN_H
+#include <datatypes.h>
 
-/* Xraycaster headers */
-#include <raycaster.h>
-#include <config.h>
-#include <player.h>
-#include <map.h>
-#include <drawing.h>
-#include <win_manager.h>
-#include <io.h>
 
-#define KEY_BUF_LEN 256
+COLOR new_color(uint64_t color)
+{
+    return (COLOR)color;
+}
 
-#endif
+RECT new_rect(int32_t x, int32_t y, int32_t w, int32_t h)
+{
+    return (RECT){.x=x, .y=y, .w=w, .h=h};
+}
+
+TILE new_tile(int32_t x, int32_t y)
+{
+    return (TILE){.x=x, .y=y};
+}
+
+TRANSFORM new_transform(float x, float y, float r)
+{
+    return (TRANSFORM){.x=x, .y=y, .r=r};
+}
 

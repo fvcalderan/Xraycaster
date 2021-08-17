@@ -1,4 +1,4 @@
-/* This is the main header file for Xraycaster
+/* This is the win_manager source code for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,19 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _MAIN_H
-#define _MAIN_H
+#include <window_api.h>
 
-/* Xraycaster headers */
-#include <raycaster.h>
-#include <config.h>
-#include <player.h>
-#include <map.h>
-#include <drawing.h>
-#include <win_manager.h>
-#include <io.h>
+void init_window(const char *title, uint16_t width, uint16_t height)
+{
+    _init_window(title, width, height);
+}
 
-#define KEY_BUF_LEN 256
+void destroy_window()
+{
+    _destroy_window();
+}
 
-#endif
+void clear_window()
+{
+    _clear_window();
+}
 
+void flush_window()
+{
+    _flush_window();
+}

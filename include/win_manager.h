@@ -1,4 +1,4 @@
-/* This is the utils header file for Xraycaster
+/* This is the win_manager header file for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,12 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _UTILS_H
-#define _UTILS_H
+#ifndef _WIN_MANAGER_H
+#define _WIN_MANAGER_H
 
-#include <global.h>
+/* standard headers */
+#include <stdint.h>
 
-uint64_t RGB_vector(uint8_t r,uint8_t g, uint8_t b);
-uint64_t RGB_hex(const char *hex);
+/* Xraycaster headers */
+#include <window_api.h>
+
+void init_window(const char *title, uint16_t width, uint16_t height);
+void destroy_window();
+void clear_window();
+void flush_window();
 
 #endif

@@ -1,4 +1,4 @@
-/* This is the utils source code for Xraycaster
+/* This is the io header file for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,28 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#include <utils.h>
+#ifndef _IO_H
+#define _IO_H
 
-uint64_t RGB_vector(uint8_t r, uint8_t g, uint8_t b)
-{
-    return b + (g<<8) + (r<<16);
-}
+/* standard headers */
+#include <stdint.h>
 
-uint64_t RGB_hex(const char *hex)
-{
-    uint64_t decimal = 0, val = 0, len;
-    uint8_t i;
+/* Xraycaster headers */
+#include <window_api.h>
 
-    len = strlen(hex);
-    len--;
+typedef uint32_t INPUT;
 
-    for(i=0; hex[i]!='\0'; i++) {
-        if(hex[i]>='0' && hex[i]<='9')      { val = hex[i] - 48;      }
-        else if(hex[i]>='a' && hex[i]<='f') { val = hex[i] - 97 + 10; }
-        else if(hex[i]>='A' && hex[i]<='F') { val = hex[i] - 65 + 10; }
-        decimal += val * pow(16, len);
-        len--;
-    }
+void get_input(INPUT *input);
 
-    return decimal;
-}
+#endif

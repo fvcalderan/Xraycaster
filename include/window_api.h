@@ -1,4 +1,4 @@
-/* This is the main header file for Xraycaster
+/* This is the drawing_api header file for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,19 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _MAIN_H
-#define _MAIN_H
+#ifndef _WINDOW_API_H
+#define _WINDOW_API_H
 
-/* Xraycaster headers */
-#include <raycaster.h>
-#include <config.h>
-#include <player.h>
-#include <map.h>
-#include <drawing.h>
-#include <win_manager.h>
-#include <io.h>
+/* X11 headers */
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
+#include <X11/keysym.h>
 
-#define KEY_BUF_LEN 256
+/* standard headers */
+#include <stdlib.h>
+#include <stdint.h>
+
+#define ALPHABET_SIZE 256
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+
+/* X variables */
+Display *dis;
+int32_t screen;
+Window win;
+GC gc;
+
+void _init_window(const char *title, uint16_t width, uint16_t height);
+void _destroy_window();
+void _clear_window();
+void _flush_window();
+void _draw_rect(int32_t x, int32_t y, int32_t w, int32_t h, uint64_t color);
+void _get_input(uint32_t *arrow_keys);
 
 #endif
-

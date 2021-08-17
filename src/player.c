@@ -1,4 +1,4 @@
-/* This is the global header file for Xraycaster
+/* This is the player source code for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,26 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _GLOBAL_H
-#define _GLOBAL_H
+#include <player.h>
 
-/* include the X library headers */
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xos.h>
-#include <X11/keysym.h>
-
-/* include standard headers */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-
-/* X variables */
-Display *dis;
-int32_t screen;
-Window win;
-GC gc;
-
-#endif
+PLAYER new_player(float x, float y, float r, float spd, float rspd, float fov)
+{
+    return (PLAYER){
+        .t=(TRANSFORM){.x=x, .y=y, .r=r}, .spd=spd, .rspd=rspd, .fov=fov
+    };
+}

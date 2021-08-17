@@ -16,34 +16,35 @@
 
 #include <main.h>
 
-Entity player;
+PLAYER player;
 
 void game_ready()
 {
-    player.x = PLAYER_START_POS_X;
-    player.y = PLAYER_START_POS_Y;
-    player.r = PLAYER_START_ROT;
+    /* setup the player */
+    player = new_player(
+        PLR_POS_X, PLR_POS_Y, PLR_ROT, PLR_SPEED, PLR_RSPEED, PLR_FOV
+    );
 }
 
 void game_loop()
 {
-    uint32_t key_presses[256] = {0};
+    INPUT key_presses[KEY_BUF_LEN] = {0};
     int x = 0;
     int y = 0;
     while(1) {                      /* keeps checking for events */
-        event_loop(key_presses);
-        if (key_presses[119]) { y -= 10; }
-        if (key_presses[115]) { y += 10; }
-        if (key_presses[97])  { x -= 10; }
-        if (key_presses[100]) { x += 10; }
-        Rect2 rect = {.x = x, .y = y, .width = 100, .height = 150};
+        get_input(key_presses);
+        if (key_presses['w']) { y -= 10; }
+        if (key_presses['s']) { y += 10; }
+        if (key_presses['a']) { x -= 10; }
+        if (key_presses['d']) { x += 10; }
+        RECT rect = new_rect(x, y, 100, 150);
         clear_window();
-        draw_rect(rect, 0xadd9e5);
+        draw_rect(rect, new_color(0xadd9e5));
         flush_window();
     }
 }
 
-int32_t main (int argc, char **argv)
+int32_t main ()
 {
     init_window("Xraycaster", SCR_WIDTH, SCR_HEIGHT);
     game_ready();

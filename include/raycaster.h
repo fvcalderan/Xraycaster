@@ -1,4 +1,4 @@
-/* This is the main header file for Xraycaster
+/* This is the raycaster header file for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,19 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _MAIN_H
-#define _MAIN_H
+#ifndef _RAYCASTER_H
+#define _RAYCASTER_H
+
+/* standard headers */
+#include <stdint.h>
 
 /* Xraycaster headers */
-#include <raycaster.h>
-#include <config.h>
-#include <player.h>
 #include <map.h>
-#include <drawing.h>
-#include <win_manager.h>
-#include <io.h>
-
-#define KEY_BUF_LEN 256
+#include <player.h>
+#include <datatypes.h>
 
 #endif
-

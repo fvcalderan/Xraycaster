@@ -1,4 +1,4 @@
-/* This is the X11 bindings header file for Xraycaster
+ /* This is the drawing source code for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _WINDOW_MANAGER_H
-#define _WINDOW_MANAGER_H
+#include <drawing.h>
 
-#include <global.h>
-#include <primitives.h>
-
-void init_window(const char *title, uint16_t width, uint16_t height);
-void destroy_window();
-void clear_window();
-void flush_window();
-void draw_rect(Rect2 rect, uint64_t color);
-char get_key();
-void event_loop(uint32_t *arrow_keys);
-
-#endif
+void draw_rect(RECT rect, COLOR color)
+{
+    _draw_rect(rect.x, rect.y, rect.w, rect.h, (uint64_t)color);
+}
