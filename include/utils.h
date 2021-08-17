@@ -17,8 +17,9 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 
-#include "global.h"
+#include <global.h>
 
-uint64_t RGB(uint8_t r,uint8_t g, uint8_t b);
+uint64_t RGB_vector(uint8_t r,uint8_t g, uint8_t b);
+uint64_t RGB_hex(const char *hex);
 
 #endif

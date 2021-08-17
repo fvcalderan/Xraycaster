@@ -17,11 +17,9 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
-/* custom lib headers */
-#include "X11_bindings.h"
-#include "config.h"
-#include "utils.h"
-#include "global.h"
+#include <X11_bindings.h>
+#include <config.h>
+#include <global.h>
 
 #endif
 

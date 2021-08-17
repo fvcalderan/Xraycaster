@@ -14,26 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#include "main.h"
+#include <main.h>
 
-int32_t main (int argc, char **argv)
+Entity player;
+
+void game_ready()
 {
+    player.x = PLAYER_START_POS_X;
+    player.y = PLAYER_START_POS_Y;
+    player.r = PLAYER_START_ROT;
+}
 
-    init_window("Xraycaster", SCR_WIDTH, SCR_HEIGHT);
-
-    uint32_t arrow_keys[4] = {0};
+void game_loop()
+{
+    uint32_t key_presses[256] = {0};
     int x = 0;
     int y = 0;
     while(1) {                      /* keeps checking for events */
-        event_loop(arrow_keys);
-        if (arrow_keys[0]) { y -= 10; }
-        if (arrow_keys[1]) { y += 10; }
-        if (arrow_keys[2]) { x -= 10; }
-        if (arrow_keys[3]) { x += 10; }
+        event_loop(key_presses);
+        if (key_presses[119]) { y -= 10; }
+        if (key_presses[115]) { y += 10; }
+        if (key_presses[97])  { x -= 10; }
+        if (key_presses[100]) { x += 10; }
         Rect2 rect = {.x = x, .y = y, .width = 100, .height = 150};
         clear_window();
-        draw_rect(rect, RGB(0,255,0));
+        draw_rect(rect, 0xadd9e5);
         flush_window();
     }
-    return 0;
+}
+
+int32_t main (int argc, char **argv)
+{
+    init_window("Xraycaster", SCR_WIDTH, SCR_HEIGHT);
+    game_ready();
+    game_loop();
+    destroy_window();
 }

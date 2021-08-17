@@ -20,6 +20,16 @@
 #define SCR_WIDTH  480
 #define SCR_HEIGHT 480
 
+#define SKY_COLOR   0xadd9e5
+#define FLOOR_COLOR 0x333333
+#define WALL1_COLOR 0xffaaaa
+#define WALL2_COLOR 0xaaffaa
+#define WALL3_COLOR 0xaaaaff
+
+#define PLAYER_START_POS_X 1
+#define PLAYER_START_POS_Y 1
+#define PLAYER_START_ROT   0
+
 const uint8_t map[10][10] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},

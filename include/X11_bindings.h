@@ -17,10 +17,10 @@
 #ifndef _WINDOW_MANAGER_H
 #define _WINDOW_MANAGER_H
 
-#include "global.h"
-#include "primitives.h"
+#include <global.h>
+#include <primitives.h>
 
-void init_window(const char* title, uint16_t width, uint16_t height);
+void init_window(const char *title, uint16_t width, uint16_t height);
 void destroy_window();
 void clear_window();
 void flush_window();

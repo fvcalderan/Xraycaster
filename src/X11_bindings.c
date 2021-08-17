@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#include "X11_bindings.h"
+#include <X11_bindings.h>
 
-void init_window(const char* title, uint16_t width, uint16_t height)
+void init_window(const char *title, uint16_t width, uint16_t height)
 {
     uint64_t black, white;
     dis    = XOpenDisplay((char *)0);
@@ -29,7 +29,9 @@ void init_window(const char* title, uint16_t width, uint16_t height)
             );
     gc     = XCreateGC(dis, win, 0,0);
     XSetStandardProperties(dis, win, title, "icon", None, NULL,0, NULL);
-    XSelectInput(dis, win, ExposureMask|ButtonPressMask|KeyPressMask|KeyReleaseMask);
+    XSelectInput(
+            dis, win, ExposureMask|ButtonPressMask|KeyPressMask|KeyReleaseMask
+    );
     XSetBackground(dis, gc, black);
     XSetForeground(dis, gc, white);
     XClearWindow(dis, win);
@@ -60,40 +62,20 @@ void draw_rect(Rect2 rect, uint64_t color)
     XFillRectangle(dis, win, gc, rect.x, rect.y, rect.width, rect.height);
 }
 
-int keysym_to_arrow_key(KeySym keysym) {
-    switch (keysym) {
-    case XK_Up:
-        return 0;
-    case XK_Down:
-        return 1;
-    case XK_Left:
-        return 2;
-    case XK_Right:
-        return 3;
-    }
-    return -1;
-}
-
-void event_loop(uint32_t *arrow_keys)
+void event_loop(uint32_t *key_presses)
 {
     XEvent event;
     KeySym keysym;
-    int32_t arrow_key;
     XNextEvent(dis, &event);
 
     switch (event.type) {
         case KeyPress:
             keysym = XLookupKeysym(&event.xkey, 0);
-            arrow_key = keysym_to_arrow_key(keysym);
-            if (arrow_key != -1)
-                arrow_keys[arrow_key] = 1;
+            key_presses[keysym] = 1;
             break;
         case KeyRelease:
             keysym = XLookupKeysym(&event.xkey, 0);
-            arrow_key = keysym_to_arrow_key(keysym);
-
-            if (arrow_key != -1)
-                arrow_keys[arrow_key] = 0;
+            key_presses[keysym] = 0;
             break;
     }
 }

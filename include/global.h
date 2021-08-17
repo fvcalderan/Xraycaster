@@ -30,8 +30,6 @@
 #include <stdint.h>
 #include <math.h>
 
-#define BUF_SIZE 256
-
 /* X variables */
 Display *dis;
 int32_t screen;
