@@ -45,6 +45,28 @@ void run_tests()
     printf("%lf\n", next_move(&player, IDLE).y);
 }
 
+void process_input()
+{
+    /* reset previous input direction */
+    dir = IDLE;
+
+    /* check for walking inputs */
+    if (key_presses['w']) { dir |= FORWARD;  }
+    if (key_presses['s']) { dir |= BACKWARD; }
+    if (key_presses['a']) { dir |= LEFT;     }
+    if (key_presses['d']) { dir |= RIGHT;    }
+
+    /* compute collision for the next move. If it's a valid move, move. */
+    next_pos = next_move(&player, dir);
+    if (val_in(map, world2tile(map, next_pos)) == 0) {
+        move(&player, next_pos);
+    }
+
+    /* check for turning inputs */
+    if (key_presses['q']) { turn(&player, LEFT);  }
+    if (key_presses['e']) { turn(&player, RIGHT); }
+}
+
 void game_ready()
 {
     /* setup the map */
@@ -66,21 +88,9 @@ void game_ready()
 void game_loop()
 {
     while(1) {
-        /* reset previous input direction */
-        dir = IDLE;
-
-        /* check for inputs */
+        /* deal with inputs */
         get_input(key_presses);
-        if (key_presses['w']) { dir |= FORWARD;  }
-        if (key_presses['s']) { dir |= BACKWARD; }
-        if (key_presses['a']) { dir |= LEFT;     }
-        if (key_presses['d']) { dir |= RIGHT;    }
-
-        /* compute collision for the next move. If it's a valid move, move. */
-        next_pos = next_move(&player, dir);
-        if (val_in(map, world2tile(map, next_pos)) == 0) {
-            move(&player, next_pos);
-        }
+        process_input();
 
         /* draw the player */
         RECT rect = new_rect(player.t.x, player.t.y, 50, 50);

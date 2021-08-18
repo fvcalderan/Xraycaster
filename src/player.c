@@ -69,3 +69,11 @@ void move(PLAYER *player, TRANSFORM position)
     player->t.x = position.x;
     player->t.y = position.y;
 }
+
+void turn(PLAYER *player, DIRECTION dir)
+{
+    switch (dir) {
+        case LEFT:  player->t.r -= player->rspd; break;
+        case RIGHT: player->t.r += player->rspd; break;
+    }
+}
