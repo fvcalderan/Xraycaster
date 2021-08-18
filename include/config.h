@@ -18,9 +18,9 @@
 #define _CONFIG_H
 
 /* Graphics */
-#define SCR_WIDTH  480
-#define SCR_HEIGHT 480
-#define QUALITY    0.25
+#define SCR_WIDTH   480
+#define SCR_HEIGHT  480
+#define QUALITY     0.25
 
 /* Colors */
 #define SKY_COLOR   0xadd9e5
@@ -32,14 +32,14 @@
 /* Player */
 #define PLR_POS_X   3
 #define PLR_POS_Y   5
-#define PLR_ROT     0
+#define PLR_ROT     3.141593
 #define PLR_SPEED   10
 #define PLR_RSPEED  0.104719
 #define PLR_FOV     1.047197
 
 /* Map */
-#define MAP_WIDTH  10
-#define MAP_HEIGHT 10
+#define MAP_WIDTH   10
+#define MAP_HEIGHT  10
 uint8_t THE_MAP[MAP_WIDTH*MAP_HEIGHT] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,

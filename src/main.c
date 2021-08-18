@@ -15,10 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
 #include <main.h>
-#include <stdio.h>
 
+/* important entities */
 PLAYER player;
 MAP map;
+
+/* important variables for the game loop */
+INPUT key_presses[KEY_BUF_LEN] = {0};
+TRANSFORM next_pos = {.x=0, .y=0, .r=0};
+DIRECTION dir = IDLE;
 
 void run_tests()
 {
@@ -33,20 +38,26 @@ void run_tests()
     printf("TRANSFORM: (%f, %f, %f)\n", t1.x, t1.y, t1.r);
 
     printf("\nPLAYER START POSITION\n");
-    printf("Player transform: (%f %f %f)", player.t.x, player.t.y, player.t.r);
-}
+    printf("plr transform: (%f %f %f)\n", player.t.x, player.t.y, player.t.r);
 
+    printf("\nNEXT MOVE\n");
+    printf("%lf\n", next_move(&player, IDLE).x);
+    printf("%lf\n", next_move(&player, IDLE).y);
+}
 
 void game_ready()
 {
     /* setup the map */
     map = new_map(THE_MAP, MAP_WIDTH, MAP_HEIGHT, SCR_WIDTH, SCR_HEIGHT);
 
-    /* setup the player */
+    /* setup the player and start position*/
     TRANSFORM start_pos = tile2world(map, (TILE){.x=PLR_POS_X, .y=PLR_POS_Y});
     player = new_player(
-        start_pos.x, start_pos.y, start_pos.r, PLR_SPEED, PLR_RSPEED, PLR_FOV
+        start_pos.x, start_pos.y, PLR_ROT, PLR_SPEED, PLR_RSPEED, PLR_FOV
     );
+
+    /* the immediate next position is the starting position */
+    memcpy(&next_pos, &player.t, sizeof(TRANSFORM));
 
     /* run tests */
     run_tests();
@@ -54,16 +65,25 @@ void game_ready()
 
 void game_loop()
 {
-    INPUT key_presses[KEY_BUF_LEN] = {0};
-    int x = 0;
-    int y = 0;
-    while(1) {                      /* keeps checking for events */
+    while(1) {
+        /* reset previous input direction */
+        dir = IDLE;
+
+        /* check for inputs */
         get_input(key_presses);
-        if (key_presses['w']) { y -= 10; }
-        if (key_presses['s']) { y += 10; }
-        if (key_presses['a']) { x -= 10; }
-        if (key_presses['d']) { x += 10; }
-        RECT rect = new_rect(x, y, 100, 150);
+        if (key_presses['w']) { dir |= FORWARD;  }
+        if (key_presses['s']) { dir |= BACKWARD; }
+        if (key_presses['a']) { dir |= LEFT;     }
+        if (key_presses['d']) { dir |= RIGHT;    }
+
+        /* compute collision for the next move. If it's a valid move, move. */
+        next_pos = next_move(&player, dir);
+        if (val_in(map, world2tile(map, next_pos)) == 0) {
+            move(&player, next_pos);
+        }
+
+        /* draw the player */
+        RECT rect = new_rect(player.t.x, player.t.y, 50, 50);
         clear_window();
         draw_rect(rect, new_color(0xadd9e5));
         flush_window();

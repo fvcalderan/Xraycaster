@@ -22,6 +22,11 @@ COLOR new_color(uint64_t color)
     return (COLOR)color;
 }
 
+TILETYPE new_tiletype(uint8_t tiletype)
+{
+    return (TILETYPE)tiletype;
+}
+
 RECT new_rect(int32_t x, int32_t y, int32_t w, int32_t h)
 {
     return (RECT){.x=x, .y=y, .w=w, .h=h};

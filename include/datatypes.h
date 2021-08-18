@@ -20,6 +20,8 @@
 /* standard headers */
 #include <stdint.h>
 
+#define PI 3.1415926436
+
 typedef uint64_t COLOR;
 
 typedef uint8_t TILETYPE;
@@ -42,7 +44,8 @@ typedef struct {
     float r;        // rotation (rad)
 } TRANSFORM;
 
-COLOR new_color(uint64_t color);    // only here for abstraction
+COLOR new_color(uint64_t color);            // only here for abstraction
+TILETYPE new_tiletype(uint8_t tiletype);   // only here for abstraction
 RECT new_rect(int32_t x, int32_t y, int32_t w, int32_t h);
 TILE new_tile(int32_t x, int32_t y);
 TRANSFORM new_transform(float x, float y, float r);

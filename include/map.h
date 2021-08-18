@@ -19,6 +19,8 @@
 
 /* standard headers */
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 
 /* Xraycaster headers */
 #include <datatypes.h>

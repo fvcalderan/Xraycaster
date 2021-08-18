@@ -19,7 +19,6 @@
 void _init_window(const char *title, uint16_t width, uint16_t height)
 {
     uint64_t black, white;
-
     dis    = XOpenDisplay((char *)0);
     screen = DefaultScreen(dis);
     black  = BlackPixel(dis, screen),
@@ -29,7 +28,6 @@ void _init_window(const char *title, uint16_t width, uint16_t height)
                 width, height, 5, white, black
             );
     gc     = XCreateGC(dis, win, 0,0);
-
     XSetStandardProperties(dis, win, title, "icon", None, NULL, 0, NULL);
     XSelectInput(
             dis, win, ExposureMask|ButtonPressMask|KeyPressMask|KeyReleaseMask

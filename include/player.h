@@ -19,9 +19,22 @@
 
 /* standard headers */
 #include <stdint.h>
+#include <math.h>
 
 /* Xraycaster headers */
 #include <datatypes.h>
+
+/* Direction bits */
+#define IDLE     0b0000
+#define FORWARD  0b0001
+#define BACKWARD 0b0010
+#define LEFT     0b0100
+#define RIGHT    0b1000
+
+/* inverse sqrt of 2 */
+#define ISR2     0.707107
+
+typedef uint8_t DIRECTION;
 
 typedef struct {
     TRANSFORM t;    // position & rotation
@@ -31,5 +44,7 @@ typedef struct {
 } PLAYER;
 
 PLAYER new_player(float x, float y, float r, float spd, float rspd, float fov);
+TRANSFORM next_move(PLAYER *player, DIRECTION dir);
+void move(PLAYER *player, TRANSFORM position);
 
 #endif
