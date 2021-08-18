@@ -17,6 +17,7 @@
 #include <main.h>
 
 PLAYER player;
+MAP map;
 
 void game_ready()
 {
@@ -24,6 +25,8 @@ void game_ready()
     player = new_player(
         PLR_POS_X, PLR_POS_Y, PLR_ROT, PLR_SPEED, PLR_RSPEED, PLR_FOV
     );
+    /* setup the map */
+    map = new_map(THE_MAP, MAP_WIDTH, MAP_HEIGHT, SCR_WIDTH, SCR_HEIGHT);
 }
 
 void game_loop()

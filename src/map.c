@@ -1,4 +1,4 @@
-/* This is the map header file for Xraycaster
+/* This is the map source code for Xraycaster
  * Copyright (C) 2021 Felipe V. Calderan <fvcalderan@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,26 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#ifndef _MAP_H
-#define _MAP_H
-
-/* standard headers */
-#include <stdint.h>
-
-/* Xraycaster headers */
-#include <datatypes.h>
-
-typedef struct {
-    uint8_t *tiles;     // map array
-    uint8_t w;          // width
-    uint8_t h;          // height
-    float tile_w;       // tile width
-    float tile_h;       // tile height
-} MAP;
+#include <map.h>
+#include <stdio.h>
 
 MAP new_map(
         uint8_t *the_map, uint8_t w, uint8_t h,
         uint16_t scr_width, uint16_t scr_height
-);
-
-#endif
+)
+{
+    //printf("%d %d \n", the_map[w*3+3], w);
+    return (MAP){
+        .tiles=the_map, .w=w, .h=h,
+        .tile_w=(float)scr_width/(float)w,
+        .tile_h=(float)scr_height/(float)h
+    };
+}
