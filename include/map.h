@@ -24,7 +24,7 @@
 #include <datatypes.h>
 
 typedef struct {
-    uint8_t *tiles;     // map array
+    TILETYPE *tiles;    // map array
     uint8_t w;          // width
     uint8_t h;          // height
     float tile_w;       // tile width
@@ -32,8 +32,12 @@ typedef struct {
 } MAP;
 
 MAP new_map(
-        uint8_t *the_map, uint8_t w, uint8_t h,
+        uint8_t *map, uint8_t w, uint8_t h,
         uint16_t scr_width, uint16_t scr_height
 );
+
+TILETYPE val_in(MAP map, TILE tile);
+TILE world2tile(MAP map, TRANSFORM t);
+TRANSFORM tile2world(MAP map, TILE tile);
 
 #endif

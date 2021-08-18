@@ -22,6 +22,8 @@
 
 typedef uint64_t COLOR;
 
+typedef uint8_t TILETYPE;
+
 typedef struct {
     int32_t x;      // x screen position
     int32_t y;      // y screen position

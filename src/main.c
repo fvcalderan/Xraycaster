@@ -15,18 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
 #include <main.h>
+#include <stdio.h>
 
 PLAYER player;
 MAP map;
 
+void run_tests()
+{
+    printf("\nGET TILE VALUE\n");
+    printf("%d\n", val_in(map, (TILE){.x=4, .y=3}));
+    printf("%d\n", val_in(map, (TILE){.x=3, .y=4}));
+
+    printf("\nTILE AND WORLD CONVERSIONS\n");
+    TILE tile1 = world2tile(map, (TRANSFORM){.x=72, .y=120, .r=0});
+    TRANSFORM t1 = tile2world(map, (TILE){.x=1, .y=2});
+    printf("TILE: (%d, %d)\n", tile1.x, tile1.y);
+    printf("TRANSFORM: (%f, %f, %f)\n", t1.x, t1.y, t1.r);
+
+    printf("\nPLAYER START POSITION\n");
+    printf("Player transform: (%f %f %f)", player.t.x, player.t.y, player.t.r);
+}
+
+
 void game_ready()
 {
-    /* setup the player */
-    player = new_player(
-        PLR_POS_X, PLR_POS_Y, PLR_ROT, PLR_SPEED, PLR_RSPEED, PLR_FOV
-    );
     /* setup the map */
     map = new_map(THE_MAP, MAP_WIDTH, MAP_HEIGHT, SCR_WIDTH, SCR_HEIGHT);
+
+    /* setup the player */
+    TRANSFORM start_pos = tile2world(map, (TILE){.x=PLR_POS_X, .y=PLR_POS_Y});
+    player = new_player(
+        start_pos.x, start_pos.y, start_pos.r, PLR_SPEED, PLR_RSPEED, PLR_FOV
+    );
+
+    /* run tests */
+    run_tests();
 }
 
 void game_loop()

@@ -15,17 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
 #include <map.h>
-#include <stdio.h>
 
 MAP new_map(
-        uint8_t *the_map, uint8_t w, uint8_t h,
+        TILETYPE *map, uint8_t w, uint8_t h,
         uint16_t scr_width, uint16_t scr_height
 )
 {
-    //printf("%d %d \n", the_map[w*3+3], w);
     return (MAP){
-        .tiles=the_map, .w=w, .h=h,
-        .tile_w=(float)scr_width/(float)w,
-        .tile_h=(float)scr_height/(float)h
+        .tiles=map, .w=w, .h=h,
+        .tile_w=scr_width/w,
+        .tile_h=scr_height/h
+    };
+}
+
+/* returns the tile type at tile.x tile.y coords */
+TILETYPE val_in(MAP map, TILE tile)
+{
+    return map.tiles[tile.y * map.w + tile.x];
+}
+
+/* convert world coordinates to tile coordinates */
+TILE world2tile(MAP map, TRANSFORM t)
+{
+    return (TILE){
+        .x = t.x/map.tile_w,
+        .y = t.y/map.tile_h
+    };
+}
+
+/* convert tile coordinates to world coordinates */
+TRANSFORM tile2world(MAP map, TILE tile)
+{
+    return (TRANSFORM){
+        .x = (tile.x + 0.5f) * map.tile_w,
+        .y = (tile.y + 0.5f) * map.tile_h,
+        .r = 0.0f
     };
 }

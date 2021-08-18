@@ -17,9 +17,10 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
-/* Screen */
+/* Graphics */
 #define SCR_WIDTH  480
 #define SCR_HEIGHT 480
+#define QUALITY    0.25
 
 /* Colors */
 #define SKY_COLOR   0xadd9e5
@@ -29,8 +30,8 @@
 #define WALL3_COLOR 0xaaaaff
 
 /* Player */
-#define PLR_POS_X   1
-#define PLR_POS_Y   1
+#define PLR_POS_X   3
+#define PLR_POS_Y   5
 #define PLR_ROT     0
 #define PLR_SPEED   10
 #define PLR_RSPEED  0.104719
@@ -43,8 +44,8 @@ uint8_t THE_MAP[MAP_WIDTH*MAP_HEIGHT] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 2, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 2, 1, 0, 0, 0, 0, 1,
+    1, 0, 0, 3, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
