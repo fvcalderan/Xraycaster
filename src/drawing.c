@@ -18,5 +18,5 @@
 
 void draw_rect(RECT rect, COLOR color)
 {
-    _draw_rect(rect.x, rect.y, rect.w, rect.h, (uint64_t)color);
+    _draw_rect(rect.x, rect.y, rect.w, rect.h, (uint64_t)color.hex);
 }

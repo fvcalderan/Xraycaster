@@ -22,7 +22,14 @@
 
 #define PI 3.1415926436
 
-typedef uint64_t COLOR;
+typedef union {
+    struct {
+        uint8_t r;
+        uint8_t g;
+        uint8_t b;
+    };
+    uint64_t hex;
+} COLOR;
 
 typedef uint8_t TILETYPE;
 
@@ -44,8 +51,9 @@ typedef struct {
     float r;        // rotation (rad)
 } TRANSFORM;
 
-COLOR new_color(uint64_t color);            // only here for abstraction
-TILETYPE new_tiletype(uint8_t tiletype);   // only here for abstraction
+COLOR new_color_hex(uint64_t color);
+COLOR new_color_rgb(uint8_t r, uint8_t g, uint8_t b);
+TILETYPE new_tiletype(uint8_t tiletype);
 RECT new_rect(int32_t x, int32_t y, int32_t w, int32_t h);
 TILE new_tile(int32_t x, int32_t y);
 TRANSFORM new_transform(float x, float y, float r);

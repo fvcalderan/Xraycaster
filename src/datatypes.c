@@ -17,9 +17,14 @@
 #include <datatypes.h>
 
 
-COLOR new_color(uint64_t color)
+COLOR new_color_hex(uint64_t color)
 {
-    return (COLOR)color;
+    return (COLOR){.hex=color};
+}
+
+COLOR new_color_rgb(uint8_t r, uint8_t g, uint8_t b)
+{
+    return (COLOR){.r=r, .g=g, .b=b};
 }
 
 TILETYPE new_tiletype(uint8_t tiletype)

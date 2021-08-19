@@ -31,7 +31,7 @@
 
 typedef struct {
     float distance;
-    COLOR color;
+    int32_t color_index;
 } WALL;
 
 typedef struct {
@@ -64,7 +64,7 @@ void *_thread_worker(void *ptr);
 
 void cast_rays(RAYCASTER *rc);
 
-WALL new_wall(float distance, COLOR color);
+WALL new_wall(float distance, int32_t color_index);
 
 THREAD_FEED new_thread_feed(uint32_t id, RAYCASTER *rc);
 

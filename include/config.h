@@ -20,12 +20,16 @@
 /* Graphics */
 #define SCR_WIDTH   480
 #define SCR_HEIGHT  480
-#define RESOLUTION  0.25
-#define THREAD_NUM  4
+#define RESOLUTION  1
+#define THREAD_NUM  1
+
+/* Effects */
+#define WALL_HEIGHT  20000
+#define SHADOW_DECAY 10000
 
 /* Player */
-#define PLR_POS_X   3
-#define PLR_POS_Y   5
+#define PLR_POS_X   1
+#define PLR_POS_Y   2
 #define PLR_ROT     3.141593
 #define PLR_SPEED   10
 #define PLR_RSPEED  0.104719
@@ -36,22 +40,24 @@
 #define MAP_HEIGHT  10
 uint8_t THE_MAP[MAP_WIDTH*MAP_HEIGHT] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 0, 0, 3, 0, 0, 0, 3, 2, 1,
+    1, 0, 0, 3, 0, 0, 0, 3, 0, 1,
+    1, 0, 0, 3, 3, 0, 3, 3, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 3, 3, 0, 3, 3, 2, 0, 2, 1,
+    1, 2, 0, 0, 0, 3, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 2, 1, 0, 0, 0, 0, 1,
-    1, 0, 0, 3, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 2, 0, 0, 0, 3, 0, 0, 2, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
 
-/* Colors */
-#define SKY_COLOR   0xadd9e5
-#define FLOOR_COLOR 0x333333
-#define WALL1_COLOR 0xffaaaa
-#define WALL2_COLOR 0xaaffaa
-#define WALL3_COLOR 0xaaaaff
+/* Color names */
+#define FLOOR_COLOR 0
+#define WALL1_COLOR 1
+#define WALL2_COLOR 2
+#define WALL3_COLOR 3
+#define SKY_COLOR   4
+
+const uint64_t COLORS[5] = {0x333333, 0xffaaaa, 0xaaffaa, 0xaaaaff, 0xadd9e5};
 
 #endif

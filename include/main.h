@@ -19,6 +19,7 @@
 
 /* standard headers */
 #include <stdlib.h>
+#include <math.h>
 
 /* Xraycaster headers */
 #include <raycaster.h>
@@ -30,6 +31,13 @@
 #include <io.h>
 
 #define KEY_BUF_LEN 256
+
+void process_input();
+void draw();
+void game_ready();
+void game_loop();
+void game_cleanup();
+int32_t main();
 
 #endif
 

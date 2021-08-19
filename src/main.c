@@ -19,33 +19,13 @@
 /* important entities */
 PLAYER player;
 MAP map;
-RAYCASTER raycaster;
+RAYCASTER rc;
 
 /* important variables for the game loop */
 INPUT key_presses[KEY_BUF_LEN] = {0};
 TRANSFORM next_pos = {.x=0, .y=0, .r=0};
 DIRECTION dir = IDLE;
 WALL *walls;
-
-void run_tests()
-{
-    printf("\nGET TILE VALUE\n");
-    printf("%d\n", val_in(map, (TILE){.x=4, .y=3}));
-    printf("%d\n", val_in(map, (TILE){.x=3, .y=4}));
-
-    printf("\nTILE AND WORLD CONVERSIONS\n");
-    TILE tile1 = world2tile(map, (TRANSFORM){.x=72, .y=120, .r=0});
-    TRANSFORM t1 = tile2world(map, (TILE){.x=1, .y=2});
-    printf("TILE: (%d, %d)\n", tile1.x, tile1.y);
-    printf("TRANSFORM: (%f, %f, %f)\n", t1.x, t1.y, t1.r);
-
-    printf("\nPLAYER START POSITION\n");
-    printf("plr transform: (%f %f %f)\n", player.t.x, player.t.y, player.t.r);
-
-    printf("\nNEXT MOVE\n");
-    printf("%lf\n", next_move(&player, IDLE).x);
-    printf("%lf\n", next_move(&player, IDLE).y);
-}
 
 void process_input()
 {
@@ -73,12 +53,30 @@ void draw()
     /* draw the floor and the sky/ceiling */
     RECT sky_rect   = new_rect(0, 0, SCR_WIDTH, SCR_HEIGHT/2);
     RECT floor_rect = new_rect(0, SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT/2);
-    draw_rect(sky_rect,   new_color(SKY_COLOR)  );
-    draw_rect(floor_rect, new_color(FLOOR_COLOR));
+    draw_rect(sky_rect,   new_color_hex(COLORS[SKY_COLOR])  );
+    draw_rect(floor_rect, new_color_hex(COLORS[FLOOR_COLOR]));
 
-    /* draw the player */
-    RECT rect = new_rect(player.t.x, player.t.y, 50, 50);
-    draw_rect(rect, new_color(WALL1_COLOR));
+    /* draw the pseudo-3D walls */
+    uint32_t count = 0;
+    for (uint32_t i = 0; i < SCR_WIDTH * RESOLUTION; i++) {
+        /* wall rectangle */
+        RECT wall_rect = new_rect(
+            count*rc.stripe_scale,
+            SCR_HEIGHT/2 - WALL_HEIGHT/(2*walls[i].distance),
+            rc.stripe_scale,
+            WALL_HEIGHT/walls[i].distance
+        );
+
+        /* color with shadow decay */
+        COLOR wall_color = new_color_hex(COLORS[walls[i].color_index]);
+        wall_color.r /= 1 + pow(walls[i].distance, 2)/SHADOW_DECAY;
+        wall_color.g /= 1 + pow(walls[i].distance, 2)/SHADOW_DECAY;
+        wall_color.b /= 1 + pow(walls[i].distance, 2)/SHADOW_DECAY;
+
+        /* draw the rectangle with the correct color */
+        draw_rect(wall_rect, wall_color);
+        count++;
+    }
 }
 
 void game_ready()
@@ -98,13 +96,10 @@ void game_ready()
     /* allocate the walls array */
     walls = malloc((uint32_t)(SCR_WIDTH * RESOLUTION) * sizeof(WALL));
 
-    /* setup the raycaster */
-    raycaster = new_raycaster(
+    /* setup the raycasterc */
+    rc = new_raycaster(
         &map, &player, walls, RESOLUTION, THREAD_NUM, SCR_WIDTH, SCR_HEIGHT
     );
-
-    /* run tests */
-    run_tests();
 }
 
 void game_loop()
@@ -112,8 +107,7 @@ void game_loop()
     while(1) {
         get_input(key_presses);
         process_input();
-        clear_window();
-        cast_rays(&raycaster);
+        cast_rays(&rc);
         draw();
         flush_window();
     }

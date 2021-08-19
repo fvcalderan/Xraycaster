@@ -42,14 +42,47 @@ RAYCASTER new_raycaster(
 void *_thread_worker(void *ptr)
 {
     /* unpack the void pointer */
-    THREAD_FEED *feed = (THREAD_FEED *)ptr;
-    uint32_t t = feed->id;
-    RAYCASTER *rc = feed->rc;
+    THREAD_FEED feed = *((THREAD_FEED *)ptr);
+    // printf("RECEIVED: %d\n", feed.id);
+    // fflush(stdout);
+    uint32_t t = feed.id;
+    RAYCASTER *rc = feed.rc;
     MAP *map = rc->map;
     PLAYER *player = rc->player;
     WALL *walls = rc->walls;
 
-    printf("%f\n", rc->resolution);
+    /* variables for the raycasting procedure */
+    float angle = player->t.r + player->fov * (t/rc->thread_num -0.5);
+    uint32_t count = 0;
+    /* these will be initialized inside the for loops */
+    float target_x, target_y;
+    TILE m_pos;
+    uint8_t place_hit;
+    uint32_t index;
+
+    for (uint16_t ray = 0; ray < rc->n_rays/rc->thread_num; ray++) {
+        for (uint32_t depth = 0; depth < rc->max_depth; depth++) {
+            /* shoot ray */
+            target_x = player->t.x - sin(angle) * depth;
+            target_y = player->t.y + cos(angle) * depth;
+
+            /* convert targets world position to tile position */
+            m_pos = world2tile(*map, (TRANSFORM){.x=target_x, .y=target_y});
+
+            /* if a ray hits a wall, add new wall to walls array */
+            place_hit = val_in(*map, m_pos);
+            if (place_hit) {
+                index = (uint32_t)(count + t * rc->n_rays/rc->thread_num);
+                walls[index] = (WALL){
+                    .distance = depth * cos(player->t.r - angle) + 0.0001,
+                    .color_index = place_hit
+                };
+                break;
+            }
+        }
+        count++;
+        angle += rc->step_angle;
+    }
 
     return NULL;
 }
@@ -61,8 +94,8 @@ void cast_rays(RAYCASTER *rc)
     /* create threads and pass its id and walls array to the function*/
     for (uint32_t i = 0; i < rc->thread_num; i++) {
         THREAD_FEED t = new_thread_feed(i, rc);
-        THREAD_FEED *t_addr = &t;
-        pthread_create( &thread_pool[i], NULL, _thread_worker, (void *)t_addr);
+        //printf("SENT: %d\n", t.id);
+        pthread_create(&thread_pool[i], NULL, _thread_worker, &t);
     }
 
     /* join all threads in the pool */
@@ -70,9 +103,9 @@ void cast_rays(RAYCASTER *rc)
         pthread_join(thread_pool[i], NULL);
 }
 
-WALL new_wall(float distance, COLOR color)
+WALL new_wall(float distance, int32_t color_index)
 {
-    return (WALL){.distance=distance, .color=color};
+    return (WALL){.distance=distance, .color_index=color_index};
 }
 
 THREAD_FEED new_thread_feed(uint32_t id, RAYCASTER *rc)
