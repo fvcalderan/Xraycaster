@@ -15,7 +15,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
 #include <raycaster.h>
-#include <stdio.h>
 
 RAYCASTER new_raycaster(
         MAP *map, PLAYER *player, WALL *walls, float resolution,
@@ -42,17 +41,15 @@ RAYCASTER new_raycaster(
 void *_thread_worker(void *ptr)
 {
     /* unpack the void pointer */
-    THREAD_FEED feed = *((THREAD_FEED *)ptr);
-    // printf("RECEIVED: %d\n", feed.id);
-    // fflush(stdout);
-    uint32_t t = feed.id;
-    RAYCASTER *rc = feed.rc;
+    THREAD_FEED *feed = (THREAD_FEED *)ptr;
+    uint32_t t = feed->id;
+    RAYCASTER *rc = feed->rc;
     MAP *map = rc->map;
     PLAYER *player = rc->player;
     WALL *walls = rc->walls;
 
     /* variables for the raycasting procedure */
-    float angle = player->t.r + player->fov * (t/rc->thread_num -0.5);
+    float angle = player->t.r + player->fov * ((float)t/rc->thread_num - 0.5);
     uint32_t count = 0;
     /* these will be initialized inside the for loops */
     float target_x, target_y;
@@ -83,19 +80,21 @@ void *_thread_worker(void *ptr)
         count++;
         angle += rc->step_angle;
     }
-
+    free(feed);
     return NULL;
 }
 
 void cast_rays(RAYCASTER *rc)
 {
     pthread_t thread_pool[rc->thread_num];
+    THREAD_FEED *t;
 
     /* create threads and pass its id and walls array to the function*/
     for (uint32_t i = 0; i < rc->thread_num; i++) {
-        THREAD_FEED t = new_thread_feed(i, rc);
-        //printf("SENT: %d\n", t.id);
-        pthread_create(&thread_pool[i], NULL, _thread_worker, &t);
+        t = malloc(sizeof(THREAD_FEED));
+        t->id = i;
+        t->rc = rc;
+        pthread_create(&thread_pool[i], NULL, _thread_worker, t);
     }
 
     /* join all threads in the pool */
