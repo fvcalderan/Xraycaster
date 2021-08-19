@@ -25,6 +25,8 @@
 /* Xraycaster headers */
 #include <datatypes.h>
 
+#define FLOOR 0
+
 typedef struct {
     TILETYPE *tiles;    // map array
     uint8_t w;          // width

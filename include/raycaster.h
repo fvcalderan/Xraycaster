@@ -19,10 +19,53 @@
 
 /* standard headers */
 #include <stdint.h>
+#include <math.h>
+#include <pthread.h>
 
 /* Xraycaster headers */
 #include <map.h>
 #include <player.h>
 #include <datatypes.h>
+
+#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
+
+typedef struct {
+    float distance;
+    COLOR color;
+} WALL;
+
+typedef struct {
+    /* received as parameters */
+    MAP *map;
+    PLAYER *player;
+    WALL *walls;
+    float resolution;       // how detailed will be the pseudo-3D walls?
+    uint32_t thread_num;
+    uint16_t scr_width;
+    uint16_t scr_height;
+    /* calculated with the above values */
+    uint16_t n_rays;        // number of rays to be cast
+    float step_angle;       // how many rads the rays will be apart
+    uint32_t max_depth;     // how far the rays can reach
+    float stripe_scale;     // how much of the screen should a ray occupy?
+} RAYCASTER;
+
+typedef struct {
+    uint32_t id;
+    RAYCASTER *rc;
+} THREAD_FEED;
+
+RAYCASTER new_raycaster(
+        MAP *map, PLAYER *player, WALL *walls, float resolution,
+        uint32_t thread_num, uint16_t scr_width, uint16_t scr_height
+);
+
+void *_thread_worker(void *ptr);
+
+void cast_rays(RAYCASTER *rc);
+
+WALL new_wall(float distance, COLOR color);
+
+THREAD_FEED new_thread_feed(uint32_t id, RAYCASTER *rc);
 
 #endif

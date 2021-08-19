@@ -19,11 +19,13 @@
 /* important entities */
 PLAYER player;
 MAP map;
+RAYCASTER raycaster;
 
 /* important variables for the game loop */
 INPUT key_presses[KEY_BUF_LEN] = {0};
 TRANSFORM next_pos = {.x=0, .y=0, .r=0};
 DIRECTION dir = IDLE;
+WALL *walls;
 
 void run_tests()
 {
@@ -51,20 +53,32 @@ void process_input()
     dir = IDLE;
 
     /* check for walking inputs */
-    if (key_presses['w']) { dir |= FORWARD;  }
-    if (key_presses['s']) { dir |= BACKWARD; }
-    if (key_presses['a']) { dir |= LEFT;     }
-    if (key_presses['d']) { dir |= RIGHT;    }
+    if (key_presses['w']) dir |= FORWARD;
+    if (key_presses['s']) dir |= BACKWARD;
+    if (key_presses['a']) dir |= LEFT;
+    if (key_presses['d']) dir |= RIGHT;
 
     /* compute collision for the next move. If it's a valid move, move. */
     next_pos = next_move(&player, dir);
-    if (val_in(map, world2tile(map, next_pos)) == 0) {
+    if (val_in(map, world2tile(map, next_pos)) == FLOOR)
         move(&player, next_pos);
-    }
 
     /* check for turning inputs */
-    if (key_presses['q']) { turn(&player, LEFT);  }
-    if (key_presses['e']) { turn(&player, RIGHT); }
+    if (key_presses['q']) turn(&player, LEFT);
+    if (key_presses['e']) turn(&player, RIGHT);
+}
+
+void draw()
+{
+    /* draw the floor and the sky/ceiling */
+    RECT sky_rect   = new_rect(0, 0, SCR_WIDTH, SCR_HEIGHT/2);
+    RECT floor_rect = new_rect(0, SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT/2);
+    draw_rect(sky_rect,   new_color(SKY_COLOR)  );
+    draw_rect(floor_rect, new_color(FLOOR_COLOR));
+
+    /* draw the player */
+    RECT rect = new_rect(player.t.x, player.t.y, 50, 50);
+    draw_rect(rect, new_color(WALL1_COLOR));
 }
 
 void game_ready()
@@ -81,6 +95,14 @@ void game_ready()
     /* the immediate next position is the starting position */
     memcpy(&next_pos, &player.t, sizeof(TRANSFORM));
 
+    /* allocate the walls array */
+    walls = malloc((uint32_t)(SCR_WIDTH * RESOLUTION) * sizeof(WALL));
+
+    /* setup the raycaster */
+    raycaster = new_raycaster(
+        &map, &player, walls, RESOLUTION, THREAD_NUM, SCR_WIDTH, SCR_HEIGHT
+    );
+
     /* run tests */
     run_tests();
 }
@@ -88,22 +110,25 @@ void game_ready()
 void game_loop()
 {
     while(1) {
-        /* deal with inputs */
         get_input(key_presses);
         process_input();
-
-        /* draw the player */
-        RECT rect = new_rect(player.t.x, player.t.y, 50, 50);
         clear_window();
-        draw_rect(rect, new_color(0xadd9e5));
+        cast_rays(&raycaster);
+        draw();
         flush_window();
     }
 }
 
-int32_t main ()
+void game_cleanup()
+{
+    free(walls);
+}
+
+int32_t main()
 {
     init_window("Xraycaster", SCR_WIDTH, SCR_HEIGHT);
     game_ready();
     game_loop();
+    game_cleanup();
     destroy_window();
 }

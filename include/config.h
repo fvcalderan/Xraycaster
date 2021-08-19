@@ -20,14 +20,8 @@
 /* Graphics */
 #define SCR_WIDTH   480
 #define SCR_HEIGHT  480
-#define QUALITY     0.25
-
-/* Colors */
-#define SKY_COLOR   0xadd9e5
-#define FLOOR_COLOR 0x333333
-#define WALL1_COLOR 0xffaaaa
-#define WALL2_COLOR 0xaaffaa
-#define WALL3_COLOR 0xaaaaff
+#define RESOLUTION  0.25
+#define THREAD_NUM  4
 
 /* Player */
 #define PLR_POS_X   3
@@ -52,5 +46,12 @@ uint8_t THE_MAP[MAP_WIDTH*MAP_HEIGHT] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 };
+
+/* Colors */
+#define SKY_COLOR   0xadd9e5
+#define FLOOR_COLOR 0x333333
+#define WALL1_COLOR 0xffaaaa
+#define WALL2_COLOR 0xaaffaa
+#define WALL3_COLOR 0xaaaaff
 
 #endif

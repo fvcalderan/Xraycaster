@@ -17,6 +17,9 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
+/* standard headers */
+#include <stdlib.h>
+
 /* Xraycaster headers */
 #include <raycaster.h>
 #include <config.h>

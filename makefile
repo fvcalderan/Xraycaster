@@ -7,7 +7,7 @@ OBJ		= obj
 # compiler setup
 CC		= gcc
 CFLAGS	= -Wall -Wextra -O3 -DNDEBUG
-LDFLAGS	= -lX11 -lm
+LDFLAGS	= -lX11 -lm -lpthread
 
 # files
 SRCS    = $(wildcard $(SRC)/*.c)
