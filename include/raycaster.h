@@ -21,6 +21,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <pthread.h>
+#include <stdlib.h>
 
 /* Xraycaster headers */
 #include <map.h>

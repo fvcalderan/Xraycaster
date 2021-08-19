@@ -21,7 +21,7 @@
 #define SCR_WIDTH   480
 #define SCR_HEIGHT  480
 #define RESOLUTION  1
-#define THREAD_NUM  1
+#define THREAD_NUM  8
 
 /* Effects */
 #define WALL_HEIGHT  20000

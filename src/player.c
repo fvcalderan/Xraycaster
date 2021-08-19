@@ -64,10 +64,10 @@ TRANSFORM next_move(PLAYER *player, DIRECTION dir)
     return new_pos;
 }
 
-void move(PLAYER *player, TRANSFORM position)
+void move(PLAYER *player, TRANSFORM *position)
 {
-    player->t.x = position.x;
-    player->t.y = position.y;
+    player->t.x = position->x;
+    player->t.y = position->y;
 }
 
 void turn(PLAYER *player, DIRECTION dir)

@@ -40,8 +40,8 @@ void process_input()
 
     /* compute collision for the next move. If it's a valid move, move. */
     next_pos = next_move(&player, dir);
-    if (val_in(map, world2tile(map, next_pos)) == FLOOR)
-        move(&player, next_pos);
+    if (val_in(&map, world2tile(&map, next_pos)) == FLOOR)
+        move(&player, &next_pos);
 
     /* check for turning inputs */
     if (key_presses['q']) turn(&player, LEFT);
@@ -53,8 +53,8 @@ void draw()
     /* draw the floor and the sky/ceiling */
     RECT sky_rect   = new_rect(0, 0, SCR_WIDTH, SCR_HEIGHT/2);
     RECT floor_rect = new_rect(0, SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT/2);
-    draw_rect(sky_rect,   new_color_hex(COLORS[SKY_COLOR])  );
-    draw_rect(floor_rect, new_color_hex(COLORS[FLOOR_COLOR]));
+    draw_rect(&sky_rect,   new_color_hex(COLORS[SKY_COLOR])  );
+    draw_rect(&floor_rect, new_color_hex(COLORS[FLOOR_COLOR]));
 
     /* draw the pseudo-3D walls */
     uint32_t count = 0;
@@ -74,7 +74,7 @@ void draw()
         wall_color.b /= 1 + pow(walls[i].distance, 2)/SHADOW_DECAY;
 
         /* draw the rectangle with the correct color */
-        draw_rect(wall_rect, wall_color);
+        draw_rect(&wall_rect, wall_color);
         count++;
     }
 }
@@ -85,7 +85,7 @@ void game_ready()
     map = new_map(THE_MAP, MAP_WIDTH, MAP_HEIGHT, SCR_WIDTH, SCR_HEIGHT);
 
     /* setup the player and start position*/
-    TRANSFORM start_pos = tile2world(map, (TILE){.x=PLR_POS_X, .y=PLR_POS_Y});
+    TRANSFORM start_pos = tile2world(&map, (TILE){.x=PLR_POS_X, .y=PLR_POS_Y});
     player = new_player(
         start_pos.x, start_pos.y, PLR_ROT, PLR_SPEED, PLR_RSPEED, PLR_FOV
     );

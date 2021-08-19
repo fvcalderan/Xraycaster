@@ -24,6 +24,6 @@
 #include <datatypes.h>
 #include <window_api.h>
 
-void draw_rect(RECT rect, COLOR color);
+void draw_rect(RECT *rect, COLOR color);
 
 #endif

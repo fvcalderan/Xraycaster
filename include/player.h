@@ -45,7 +45,7 @@ typedef struct {
 
 PLAYER new_player(float x, float y, float r, float spd, float rspd, float fov);
 TRANSFORM next_move(PLAYER *player, DIRECTION dir);
-void move(PLAYER *player, TRANSFORM position);
+void move(PLAYER *player, TRANSFORM *position);
 void turn(PLAYER *player, DIRECTION dir);
 
 #endif

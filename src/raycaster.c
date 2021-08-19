@@ -64,10 +64,10 @@ void *_thread_worker(void *ptr)
             target_y = player->t.y + cos(angle) * depth;
 
             /* convert targets world position to tile position */
-            m_pos = world2tile(*map, (TRANSFORM){.x=target_x, .y=target_y});
+            m_pos = world2tile(map, (TRANSFORM){.x=target_x, .y=target_y});
 
             /* if a ray hits a wall, add new wall to walls array */
-            place_hit = val_in(*map, m_pos);
+            place_hit = val_in(map, m_pos);
             if (place_hit) {
                 index = (uint32_t)(count + t * rc->n_rays/rc->thread_num);
                 walls[index] = (WALL){

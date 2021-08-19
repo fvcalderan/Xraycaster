@@ -16,7 +16,7 @@
 
 #include <drawing.h>
 
-void draw_rect(RECT rect, COLOR color)
+void draw_rect(RECT *rect, COLOR color)
 {
-    _draw_rect(rect.x, rect.y, rect.w, rect.h, (uint64_t)color.hex);
+    _draw_rect(rect->x, rect->y, rect->w, rect->h, (uint64_t)color.hex);
 }

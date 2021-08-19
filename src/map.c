@@ -29,26 +29,26 @@ MAP new_map(
 }
 
 /* returns the tile type at tile.x tile.y coords */
-TILETYPE val_in(MAP map, TILE tile)
+TILETYPE val_in(MAP *map, TILE tile)
 {
-    return map.tiles[tile.y * map.w + tile.x];
+    return map->tiles[tile.y * map->w + tile.x];
 }
 
 /* convert world coordinates to tile coordinates */
-TILE world2tile(MAP map, TRANSFORM t)
+TILE world2tile(MAP *map, TRANSFORM t)
 {
     return (TILE){
-        .x = t.x/map.tile_w,
-        .y = t.y/map.tile_h
+        .x = t.x/map->tile_w,
+        .y = t.y/map->tile_h
     };
 }
 
 /* convert tile coordinates to world coordinates */
-TRANSFORM tile2world(MAP map, TILE tile)
+TRANSFORM tile2world(MAP *map, TILE tile)
 {
     return (TRANSFORM){
-        .x = (tile.x + 0.5f) * map.tile_w,
-        .y = (tile.y + 0.5f) * map.tile_h,
+        .x = (tile.x + 0.5f) * map->tile_w,
+        .y = (tile.y + 0.5f) * map->tile_h,
         .r = 0.0f
     };
 }

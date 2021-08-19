@@ -19,8 +19,6 @@
 
 /* standard headers */
 #include <stdint.h>
-#include <stdio.h>
-#include <string.h>
 
 /* Xraycaster headers */
 #include <datatypes.h>
@@ -40,8 +38,8 @@ MAP new_map(
         uint16_t scr_width, uint16_t scr_height
 );
 
-TILETYPE val_in(MAP map, TILE tile);
-TILE world2tile(MAP map, TRANSFORM t);
-TRANSFORM tile2world(MAP map, TILE tile);
+TILETYPE val_in(MAP *map, TILE tile);
+TILE world2tile(MAP *map, TRANSFORM t);
+TRANSFORM tile2world(MAP *map, TILE tile);
 
 #endif
