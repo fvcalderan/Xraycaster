@@ -14,11 +14,11 @@ Basically none, but here you go:
 ## Dependencies
 
 The only dependency is `X11`. The other things, like `pthread` and `math`
-should be inside any desktop Linux distribution.
+should already be installed on any desktop Linux distribution.
 
 ## Build from source
 
-`make` inside the root folder. The binary `Xraycaster` will be built inside the
+`make` inside the root folder. The binary `Xraycaster` will be built in the
 `bin` folder.
 
 ## Default controls
@@ -43,14 +43,14 @@ Edit `include/config.h` and recompile the program with `make clean && make`.
 
 ## Janky stuff
 
-- The movement is awful, since I used basic `X11` keyboard input functions.
-This makes continuous inputs work like when typing (first key press is instant,
-then there's a delay, and then comes the repetitions). To further worsen the
-situation, the movement is not normalized at all.
+- The movement is awful, since Xraycaster uses basic `X11` keyboard input
+functions.  This makes continuous inputs work like when typing (first key press
+is instant, then there's a delay, and only then come the repetitions). To
+further worsen the situation, the movement is not normalized at all.
 - There is no double buffer here, so sometimes the walls flicker.
 
 ## Future plans
-- Since the only module that talks to `X11` is `<window_api.h>`, a nice little
+- Since the only module that talks to `X11` is `window_api.h`, a nice little
 project is to make a version of `Xraycaster` for Windows, using the `windows.h`
 library. This is extremely cursed, but cool regardless.
 - Fix the janky stuff.
