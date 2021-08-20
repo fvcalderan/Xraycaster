@@ -17,10 +17,23 @@ TARGET	= $(BIN)/Xraycaster
 all:$(TARGET)
 
 $(TARGET): $(OBJS)
+	mkdir -p $(BIN)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
 
 $(OBJ)/%.o: $(SRC)/%.c
+	mkdir -p $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCLUDE)
 
 clean:
 	rm -f $(OBJ)/* $(BIN)/*
+	rm -rf bin obj
+
+memcheck:
+	valgrind --leak-check=full \
+			 --show-leak-kinds=all \
+			 --track-origins=yes \
+			 --verbose \
+			 --log-file=memcheck.txt \
+			 ./${TARGET}
+	less memcheck.txt
+	rm memcheck.txt
