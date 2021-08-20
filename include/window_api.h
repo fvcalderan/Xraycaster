@@ -27,8 +27,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define ALPHABET_SIZE 256
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+
+/* which characters to consider */
+#define ALPHABET_SIZE 256
 
 /* X variables */
 Display *dis;

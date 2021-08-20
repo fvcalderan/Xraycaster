@@ -68,7 +68,7 @@ void draw()
         );
 
         /* color with shadow decay */
-        COLOR wall_color = new_color_hex(COLORS[walls[i].color_index]);
+        COLOR wall_color = new_color_hex(COLORS[walls[i].color_index + 1]);
         wall_color.r /= 1 + pow(walls[i].distance, 2)/SHADOW_DECAY;
         wall_color.g /= 1 + pow(walls[i].distance, 2)/SHADOW_DECAY;
         wall_color.b /= 1 + pow(walls[i].distance, 2)/SHADOW_DECAY;

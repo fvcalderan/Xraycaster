@@ -30,7 +30,12 @@
 #include <win_manager.h>
 #include <io.h>
 
+/* Keys pressed buffer length */
 #define KEY_BUF_LEN 256
+
+/* Color names */
+#define SKY_COLOR   0
+#define FLOOR_COLOR 1
 
 void process_input();
 void draw();
