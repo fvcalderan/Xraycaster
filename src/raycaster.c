@@ -38,6 +38,7 @@ RAYCASTER new_raycaster(
     };
 }
 
+/* this will be ran by the created threads */
 void *_thread_worker(void *ptr)
 {
     /* unpack the void pointer */

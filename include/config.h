@@ -17,6 +17,15 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
+/* Controls */
+#define WALK_FORWARD   'w'
+#define WALK_BACKWARDS 's'
+#define STRAFE_LEFT    'a'
+#define STRAFE_RIGHT   'd'
+#define TURN_LEFT      'q'
+#define TURN_RIGHT     'e'
+#define QUIT_GAME      'b'
+
 /* Graphics */
 #define SCR_WIDTH   800
 #define SCR_HEIGHT  800

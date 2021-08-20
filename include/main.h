@@ -41,7 +41,7 @@ void process_input();
 void draw();
 void game_ready();
 void game_loop();
-void game_cleanup();
+void game_quit();
 int32_t main();
 
 #endif

@@ -25,11 +25,11 @@
 #include <datatypes.h>
 
 /* Direction bits */
-#define IDLE     0b0000
-#define FORWARD  0b0001
-#define BACKWARD 0b0010
-#define LEFT     0b0100
-#define RIGHT    0b1000
+#define IDLE      0b0000
+#define FORWARD   0b0001
+#define BACKWARDS 0b0010
+#define LEFT      0b0100
+#define RIGHT     0b1000
 
 /* inverse sqrt of 2 */
 #define ISR2     0.707107

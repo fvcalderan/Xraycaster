@@ -33,10 +33,10 @@ void process_input()
     dir = IDLE;
 
     /* check for walking inputs */
-    if (key_presses['w']) dir |= FORWARD;
-    if (key_presses['s']) dir |= BACKWARD;
-    if (key_presses['a']) dir |= LEFT;
-    if (key_presses['d']) dir |= RIGHT;
+    if (key_presses[WALK_FORWARD]  ) dir |= FORWARD;
+    if (key_presses[WALK_BACKWARDS]) dir |= BACKWARDS;
+    if (key_presses[STRAFE_LEFT]   ) dir |= LEFT;
+    if (key_presses[STRAFE_RIGHT]  ) dir |= RIGHT;
 
     /* compute collision for the next move. If it's a valid move, move. */
     next_pos = next_move(&player, dir);
@@ -44,8 +44,11 @@ void process_input()
         move(&player, &next_pos);
 
     /* check for turning inputs */
-    if (key_presses['q']) turn(&player, LEFT);
-    if (key_presses['e']) turn(&player, RIGHT);
+    if (key_presses[TURN_LEFT] ) turn(&player, LEFT);
+    if (key_presses[TURN_RIGHT]) turn(&player, RIGHT);
+
+    /* check for quitting inputs */
+    if (key_presses[QUIT_GAME]) game_quit();
 }
 
 void draw()
@@ -113,9 +116,11 @@ void game_loop()
     }
 }
 
-void game_cleanup()
+void game_quit()
 {
     free(walls);
+    destroy_window();
+    exit(0);
 }
 
 int32_t main()
@@ -123,6 +128,6 @@ int32_t main()
     init_window("Xraycaster", SCR_WIDTH, SCR_HEIGHT);
     game_ready();
     game_loop();
-    game_cleanup();
-    destroy_window();
+    game_quit();
+    return 0; /* here just for the sake of it */
 }

@@ -6,7 +6,7 @@ OBJ		= obj
 
 # compiler setup
 CC		= gcc
-CFLAGS	= -Wall -Wextra -O3 -DNDEBUG
+CFLAGS	= -Wall -Wextra -O3 -DNDEBUG -std=c11
 LDFLAGS	= -lX11 -lm -lpthread
 
 # files

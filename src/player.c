@@ -34,7 +34,7 @@ TRANSFORM next_move(PLAYER *player, DIRECTION dir)
         new_pos.y += cos(player->t.r) * player->spd;
         button_presses++;
     }
-    else if (dir & BACKWARD) {
+    else if (dir & BACKWARDS) {
         new_pos.x += sin(player->t.r) * player->spd;
         new_pos.y -= cos(player->t.r) * player->spd;
         button_presses++;
