@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
 #ifndef _DRAWING_H
-#define _DRWAING_H
+#define _DRAWING_H
 
 /* standard headers */
 #include <stdint.h>

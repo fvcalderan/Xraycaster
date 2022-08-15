@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
 
-#include <window_api.h>
+#include <win_manager.h>
 
 void init_window(const char *title, uint16_t width, uint16_t height)
 {

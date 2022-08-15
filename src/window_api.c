@@ -16,6 +16,12 @@
 
 #include <window_api.h>
 
+/* X variables */
+extern Display *dis;
+extern int32_t screen;
+extern Window win;
+extern GC gc;
+
 void _init_window(const char *title, uint16_t width, uint16_t height)
 {
     uint64_t black, white;
